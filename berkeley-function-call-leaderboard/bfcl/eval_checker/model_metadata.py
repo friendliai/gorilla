@@ -1,6 +1,12 @@
 from bfcl.model_handler.handler_map import local_inference_handler_map
 
-MODEL_METADATA_MAPPING = {
+
+class DefaultModelMetadataDict(dict):
+    def __missing__(self, key):
+        return [f"unknown-{key}", "unknown-url", "unknown-company", "unknown-license"]
+
+
+MODEL_METADATA_MAPPING = DefaultModelMetadataDict({
     "gorilla-openfunctions-v2": [
         "Gorilla-OpenFunctions-v2 (FC)",
         "https://gorilla.cs.berkeley.edu/blogs/7_open_functions_v2.html",
@@ -817,9 +823,15 @@ MODEL_METADATA_MAPPING = {
         "TeleAI",
         "Apache 2.0",
     ],
-}
+})
 
-INPUT_PRICE_PER_MILLION_TOKEN = {
+
+class DefaultDictNumber(dict):
+    def __missing__(self, key):
+        return 0
+
+
+INPUT_PRICE_PER_MILLION_TOKEN = DefaultDictNumber({
     "claude-3-opus-20240229-FC": 15,
     "claude-3-opus-20240229": 15,
     "claude-3-sonnet-20240229-FC": 3,
@@ -887,9 +899,9 @@ INPUT_PRICE_PER_MILLION_TOKEN = {
     "yi-large-fc": 3,
     "palmyra-x-004": 5,
     "grok-beta": 5,
-}
+})
 
-OUTPUT_PRICE_PER_MILLION_TOKEN = {
+OUTPUT_PRICE_PER_MILLION_TOKEN = DefaultDictNumber({
     "claude-3-opus-20240229-FC": 75,
     "claude-3-opus-20240229": 75,
     "claude-3-sonnet-20240229-FC": 15,
@@ -957,7 +969,7 @@ OUTPUT_PRICE_PER_MILLION_TOKEN = {
     "yi-large-fc": 3,
     "palmyra-x-004": 12,
     "grok-beta": 15,
-}
+})
 
 # The latency of the open-source models are hardcoded here.
 # Because we do batching when generating the data, so the latency is not accurate from the result data.

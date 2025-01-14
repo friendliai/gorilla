@@ -31,6 +31,7 @@ from bfcl.model_handler.local_inference.mistral_fc import MistralFCHandler
 from bfcl.model_handler.local_inference.phi import PhiHandler
 from bfcl.model_handler.local_inference.qwen import QwenHandler
 from bfcl.model_handler.local_inference.salesforce import SalesforceHandler
+from bfcl.model_handler.api_inference.friendli import FriendliHandler
 
 # TODO: Add meta-llama/Llama-3.1-405B-Instruct
 
@@ -191,4 +192,12 @@ outdated_model_handler_map = {
     # "deepseek-ai/deepseek-coder-6.7b-instruct": DeepseekHandler,
 }
 
-HANDLER_MAP = {**api_inference_handler_map, **local_inference_handler_map}
+
+class DefaultDict(dict):
+    def __missing__(self, key):
+        return FriendliHandler
+
+
+HANDLER_MAP = DefaultDict({
+    **api_inference_handler_map, **local_inference_handler_map
+})
