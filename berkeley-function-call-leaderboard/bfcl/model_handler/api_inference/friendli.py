@@ -31,7 +31,7 @@ class FriendliHandler(OpenAIHandler):
             base_url=base_url,
             api_key=os.getenv("FRIENDLI_TOKEN"),
         )
-        self.is_fc_model = "localhost" in base_url or "http" in base_url
+        self.is_fc_model = True
 
     @staticmethod
     # TODO: Friendli Container Lora Adapter case is not handled
