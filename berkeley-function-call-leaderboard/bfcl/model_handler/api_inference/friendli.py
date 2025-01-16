@@ -33,6 +33,13 @@ class FriendliHandler(OpenAIHandler):
         )
         self.is_fc_model = True
 
+    def generate_with_backoff(self, **kwargs):
+        kwargs["extra_body"] = {
+            # NOTE: Until a specific bug is fixed
+            "max_tokens": 1000,
+        }
+        return super().generate_with_backoff(**kwargs)
+
     @staticmethod
     # TODO: Friendli Container Lora Adapter case is not handled
     def route_model(model_name: str):
