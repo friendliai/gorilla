@@ -1,7 +1,25 @@
 # Changelog
 
 All notable changes to the Berkeley Function Calling Leaderboard will be documented in this file.
+- [Feb 5, 2025] [#900](https://github.com/ShishirPatil/gorilla/pull/900): Add the following new models to the leaderboard:
+  - `uiuc-convai/CALM-8B`
+  - `uiuc-convai/CALM-70B`
+  - `uiuc-convai/CALM-405B`
 
+- [Feb 2, 2025] [#898](https://github.com/ShishirPatil/gorilla/pull/898): Add the following new models to the leaderboard:
+  - `o3-mini-2025-01-31-FC`
+  - `o3-mini-2025-01-31`
+- [Jan 28, 2025] [#894](https://github.com/ShishirPatil/gorilla/pull/894): Add the following new models to the leaderboard:
+  - `tiiuae/Falcon3-1B-Instruct-FC`
+  - `tiiuae/Falcon3-3B-Instruct-FC`
+  - `tiiuae/Falcon3-7B-Instruct-FC`
+  - `tiiuae/Falcon3-10B-Instruct-FC`
+- [Jan 27, 2025] [#895](https://github.com/ShishirPatil/gorilla/pull/895): Fix minor typo in default system prompt for prompting models.
+- [Jan 20, 2025] [#887](https://github.com/ShishirPatil/gorilla/pull/887): Add new model `speakleash/Bielik-11B-v2.3-Instruct` to the leaderboard.
+- [Jan 18, 2025] [#888](https://github.com/ShishirPatil/gorilla/pull/888): Add the following new models to the leaderboard:
+  - `NovaSky-AI/Sky-T1-32B-Preview`
+  - `Qwen/QwQ-32B-Preview`
+- [Jan 12, 2025] [#881](https://github.com/ShishirPatil/gorilla/pull/881): Fix Nova handler for consecutive user prompt issue.
 - [Jan 11, 2025] : Add new model `ZJared/Haha-7B` to the leaderboard.
 - [Jan 4, 2025] [#865](https://github.com/ShishirPatil/gorilla/pull/865): Fix a copy-paste issue in `live_parallel_multiple_9-8-0` that caused a misalignment between the question and the possible answer.
 - [Jan 3, 2025] [#864](https://github.com/ShishirPatil/gorilla/pull/864): Add support for pre-existing completion endpoints, allowing users to skip the local vLLM/SGLang server setup (using the `--skip-server-setup` flag) and point the generation pipeline to an existing OpenAI-compatible endpoint via `VLLM_ENDPOINT` and `VLLM_PORT`.

@@ -15,6 +15,7 @@ from bfcl.model_handler.api_inference.nvidia import NvidiaHandler
 from bfcl.model_handler.api_inference.openai import OpenAIHandler
 from bfcl.model_handler.api_inference.writer import WriterHandler
 from bfcl.model_handler.api_inference.yi import YiHandler
+from bfcl.model_handler.local_inference.bielik import BielikHandler
 from bfcl.model_handler.local_inference.deepseek import DeepseekHandler
 from bfcl.model_handler.local_inference.deepseek_coder import DeepseekCoderHandler
 from bfcl.model_handler.local_inference.gemma import GemmaHandler
@@ -29,9 +30,11 @@ from bfcl.model_handler.local_inference.minicpm import MiniCPMHandler
 from bfcl.model_handler.local_inference.minicpm_fc import MiniCPMFCHandler
 from bfcl.model_handler.local_inference.mistral_fc import MistralFCHandler
 from bfcl.model_handler.local_inference.phi import PhiHandler
+from bfcl.model_handler.local_inference.quick_testing_oss import QuickTestingOSSHandler
 from bfcl.model_handler.local_inference.qwen import QwenHandler
 from bfcl.model_handler.local_inference.salesforce import SalesforceHandler
 from bfcl.model_handler.api_inference.friendli import FriendliHandler
+from bfcl.model_handler.local_inference.falcon_fc import Falcon3FCHandler
 
 # TODO: Add meta-llama/Llama-3.1-405B-Instruct
 
@@ -41,8 +44,8 @@ api_inference_handler_map = {
     "DeepSeek-V3": DeepSeekAPIHandler,
     "o1-2024-12-17-FC": OpenAIHandler,
     "o1-2024-12-17": OpenAIHandler,
-    # "o1-mini-2024-09-12-FC": OpenAIHandler,  # o1-mini-2024-09-12 does not support function calling
-    "o1-mini-2024-09-12": OpenAIHandler,
+    "o3-mini-2025-01-31-FC": OpenAIHandler,
+    "o3-mini-2025-01-31": OpenAIHandler,
     "gpt-4o-2024-11-20": OpenAIHandler,
     "gpt-4o-2024-11-20-FC": OpenAIHandler,
     "gpt-4o-mini-2024-07-18": OpenAIHandler,
@@ -159,12 +162,23 @@ local_inference_handler_map = {
     "deepseek-ai/DeepSeek-V2-Chat-0628": DeepseekHandler,
     "deepseek-ai/DeepSeek-V2-Lite-Chat": DeepseekHandler,
     "ZJared/Haha-7B": QwenHandler,
+    "speakleash/Bielik-11B-v2.3-Instruct": BielikHandler,
+    "NovaSky-AI/Sky-T1-32B-Preview": QwenHandler,
+    "Qwen/QwQ-32B-Preview": QwenHandler,
+    "tiiuae/Falcon3-10B-Instruct-FC": Falcon3FCHandler,
+    "tiiuae/Falcon3-7B-Instruct-FC": Falcon3FCHandler,
+    "tiiuae/Falcon3-3B-Instruct-FC": Falcon3FCHandler,
+    "tiiuae/Falcon3-1B-Instruct-FC": Falcon3FCHandler,
+    "uiuc-convai/CALM-8B": LlamaHandler,
+    "uiuc-convai/CALM-70B": LlamaHandler,
+    "uiuc-convai/CALM-405B": LlamaHandler,
 }
 
 # Deprecated/outdated models, no longer on the leaderboard
 outdated_model_handler_map = {
     # "gorilla-openfunctions-v0": GorillaHandler,
     # "o1-preview-2024-09-12": OpenAIHandler,
+    # "o1-mini-2024-09-12": OpenAIHandler,
     # "gpt-4o-2024-08-06": OpenAIHandler,
     # "gpt-4o-2024-08-06-FC": OpenAIHandler,
     # "gpt-4o-2024-05-13": OpenAIHandler,
@@ -198,6 +212,4 @@ class DefaultDict(dict):
         return FriendliHandler
 
 
-HANDLER_MAP = DefaultDict({
-    **api_inference_handler_map, **local_inference_handler_map
-})
+HANDLER_MAP = DefaultDict({**api_inference_handler_map, **local_inference_handler_map})
