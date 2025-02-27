@@ -1,11 +1,19 @@
 # Changelog
 
 All notable changes to the Berkeley Function Calling Leaderboard will be documented in this file.
-- [Feb 5, 2025] [#900](https://github.com/ShishirPatil/gorilla/pull/900): Add the following new models to the leaderboard:
-  - `uiuc-convai/CALM-8B`
-  - `uiuc-convai/CALM-70B`
-  - `uiuc-convai/CALM-405B`
 
+- [Feb 24, 2025] [#917](https://github.com/ShishirPatil/gorilla/pull/917): Add new model `BitAgent/BitAgent-8B` to the leaderboard.
+- [Feb 5, 2025] [#900](https://github.com/ShishirPatil/gorilla/pull/900), [#913](https://github.com/ShishirPatil/gorilla/pull/913): Add the following new models to the leaderboard:
+  - `uiuc-convai/CoALM-8B`
+  - `uiuc-convai/CoALM-70B`
+  - `uiuc-convai/CoALM-405B`
+- [Feb 5, 2025] [#902](https://github.com/ShishirPatil/gorilla/pull/902): Add the following new models to the leaderboard:
+  - `gemini-2.0-flash-lite-preview-02-05-FC`
+  - `gemini-2.0-flash-lite-preview-02-05`
+  - `gemini-2.0-flash-001-FC`
+  - `gemini-2.0-flash-001`
+  - `gemini-2.0-pro-exp-02-05-FC`
+  - `gemini-2.0-pro-exp-02-05`
 - [Feb 2, 2025] [#898](https://github.com/ShishirPatil/gorilla/pull/898): Add the following new models to the leaderboard:
   - `o3-mini-2025-01-31-FC`
   - `o3-mini-2025-01-31`
