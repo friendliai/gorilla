@@ -34,10 +34,15 @@ class FriendliHandler(OpenAIHandler):
         self.is_fc_model = True
 
     def generate_with_backoff(self, **kwargs):
-        kwargs["extra_body"] = {
-            # NOTE: Until a specific bug is fixed
-            "max_tokens": 1000,
-        }
+        # NOTE: Limit max_tokens to 1000 until a specific bug is fixed
+        kwargs["extra_body"] = {"max_tokens": 1000}
+
+        # NOTE: Temporarily remove the "response" field to maintain OpenAI schema compatibility
+        if "tools" in kwargs:
+            for tool in kwargs["tools"]:
+                if "function" in tool and "response" in tool["function"]:
+                    del tool["function"]["response"]
+
         return super().generate_with_backoff(**kwargs)
 
     @staticmethod
