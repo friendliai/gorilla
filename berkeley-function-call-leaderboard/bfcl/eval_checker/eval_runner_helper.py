@@ -9,8 +9,9 @@ from bfcl._apply_function_credential_config import apply_function_credential_con
 from bfcl.constants.category_mapping import TEST_FILE_MAPPING
 from bfcl.constants.column_headers import *
 from bfcl.constants.eval_config import *
+from bfcl.constants.model_metadata import *
 from bfcl.eval_checker.executable_eval.custom_exception import BadAPIStatusError
-from bfcl.eval_checker.model_metadata import *
+from bfcl.model_handler.handler_map import local_inference_handler_map
 from bfcl.utils import (
     extract_test_category,
     find_file_with_suffix,
@@ -114,22 +115,29 @@ def display_api_status_error(rest_error, executable_error, display_success=False
     print(f"{RED_FONT}{'-' * 100}\n{RESET}")
 
 
-def get_executable_expected_output(prompt_file_path):
+def get_executable_expected_output(prompt_file_path, possible_answer_file_path):
     # Before we run the evaluation, we need to add the "execution_result" field to the prompt file, using the ground truth data.
     prompt_content = load_file(prompt_file_path)
+    possible_answers = load_file(possible_answer_file_path)
+    assert len(prompt_content) == len(possible_answers)
+
     exec_dict = {}
-    for item in tqdm(prompt_content, desc="Getting Executable Expected Output"):
+
+    for item, answer in tqdm(list(zip(prompt_content, possible_answers)), desc="Getting Executable Expected Output"):
         execution_result = []
-        ground_truth = item["ground_truth"]
+        ground_truth = answer["ground_truth"]
+
         for i in range(len(ground_truth)):
             exec(
-                "from bfcl.eval_checker.executable_eval.data.executable_python_function import *"
+                "from bfcl.eval_checker.executable_eval.executable_python_function import *"
                 + "\nresult="
                 + ground_truth[i],
                 exec_dict,
             )
             execution_result.append(exec_dict["result"])
+
         item["execution_result"] = execution_result
+        item["execution_result_type"] = answer["execution_result_type"]
 
     write_list_of_dicts_to_file(prompt_file_path, prompt_content)
 
@@ -140,6 +148,7 @@ def clean_up_executable_expected_output(prompt_path, categories):
         prompt_content = load_file(prompt_file)
         for item in prompt_content:
             del item["execution_result"]
+            del item["execution_result_type"]
         write_list_of_dicts_to_file(prompt_file, prompt_content)
 
 
@@ -274,7 +283,9 @@ def get_cost_letency_info(model_name, cost_data, latency_data):
         #     cost = sum(latency_data["data"]) * V100_x8_PRICE_PER_HOUR / 3600
         #     cost = round(cost, 2)
 
-    if model_name in NO_COST_MODELS:
+    # All OSS models will have no cost shown on the leaderboard.
+    no_cost_model = list(local_inference_handler_map.keys()) + NO_COST_API_BASED_MODELS
+    if model_name in no_cost_model:
         cost = "N/A"
 
     return cost, mean_latency, std_latency, percentile_95_latency
